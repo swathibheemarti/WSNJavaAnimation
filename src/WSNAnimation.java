@@ -15,25 +15,13 @@ public class WSNAnimation extends PApplet {
 	    noOfAgentSets = 100,         //No of agent Sets (time laps)-- this is coming from Matlab
 	    noOfAgentProperties = 10,    //No of agent properties, X, Y, S, D, T, p(x,y), q(s,d), s(p(x,y)), 
 	                                 //s(q(s,d)), Suspiciousness
-	    noOfStandingAgents = 20,     //No of agents not moving
-	    noOfSuspiciousAgents = 0;  
+	    noOfStandingAgents = 20;     //No of agents not moving
+	    
 	
 	//10 sets of 200 Agents data, data points are 
 	//X, Y, S, D, T, p(x,y), q(s,d), s(p(x,y)), s(q(s,d)), Suspiciousness (0 or 1)
 	double AgentData[][][] = new double[noOfAgentSets][noOfAgents][noOfAgentProperties]; 
 	
-	int[] personX = new int[noOfAgents], personY = new int[noOfAgents],   //Agents Locations Array
-	      standingPersonX = new int[noOfStandingAgents], //Standing Agents Location Array
-	      standingPersonY = new int[noOfStandingAgents]; //Standing Agents Location Array
-
-	
-	
-	PImage[] imgPeople = new PImage[noOfAgents];  //Image for moving agents
-	PImage[] imgPeopleWalkingLeft = new PImage[noOfAgents]; //Image for agents moving opposite direction
-	PImage[] suspiciousAgents = new PImage[noOfAgents]; //Suspicious agent Image
-	PImage[] suspiciousAgentWalkingLeft = new PImage[noOfAgents]; //Suspicious agent Image
-	
-	PImage[] imgStandingPeople = new PImage[noOfStandingAgents]; //Image for standing agents
 	
 	/*
 	public static void main(String args[]){

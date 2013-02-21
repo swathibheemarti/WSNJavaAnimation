@@ -51,6 +51,8 @@ public class Agent {
 						((Double) AgentData[0][m][1]).intValue());
 			}
 
+			
+			
 			if (agentX[m] < ((Double) AgentData[t - 1][m][0]).intValue()) {
 				if (AgentData[0][m][9] == 1) {
 					p.image(imgSuspiciousAgentGoingLeft, agentX[m], agentY[m],10, 25);
