@@ -3,8 +3,9 @@ import processing.core.*;
 public class WSNAnimation extends PApplet {
 
 	ImportAgentsDataFromExcel objAgentDataImport;
-	Sensor sensor;
+	Sensor objSensor;
 	StandingPerson objStandingPerson;
+	Agent objAgent;
 	
 	int w = 600, h = 600,            //Screen Size  
 	    gridSize = 40,               //Grid Size
@@ -45,6 +46,8 @@ public class WSNAnimation extends PApplet {
 		LoadAgents();
 		SetupInitialSensorLocations();
 		SetupStandingPeople();
+		
+		objAgent = new Agent(this, noOfAgents);
 	}
 	
 	public void LoadAgents(){
@@ -56,8 +59,8 @@ public class WSNAnimation extends PApplet {
 	}
 	
 	public void SetupInitialSensorLocations(){	
-		sensor = new Sensor(this, noOfSensors);		
-		sensor.setupSensorLocations(w, h, gridSize);		
+		objSensor = new Sensor(this, noOfSensors);		
+		objSensor.setupSensorLocations(w, h, gridSize);		
 	}
 	
 	public void SetupStandingPeople(){
@@ -70,9 +73,18 @@ public class WSNAnimation extends PApplet {
 		background(255);
 		
 		delay(100);
+		
 		drawGrid();  
 		drawRandomSensors();  	
 		drawRandomStandingPeople();
+		drawAgents();
+		
+		t++;
+		
+		if(t >= noOfAgentSets){
+			noLoop();			
+		}
+		
 	}
 	
 	/*
@@ -91,11 +103,14 @@ public class WSNAnimation extends PApplet {
 	}
 	
 	public void drawRandomSensors(){
-		sensor.drawSensors();
+		objSensor.drawSensors();
 	}
 	
 	public void drawRandomStandingPeople(){
 		objStandingPerson.drawStandingPeople();
 	}
 	
+	public void drawAgents(){
+		objAgent.drawAgents(AgentData, t);
+	}	
 }
