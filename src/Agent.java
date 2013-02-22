@@ -32,6 +32,9 @@ public class Agent {
 	}
 	
 	public void drawAgents(double[][][] AgentData, int t) {
+		
+		Random rn = new Random();
+		
 		for (int m = 0; m < noOfAgents; m++) {
 			// AgentData[0:first set of agent data][m:agent no][0:X location]
 			agentX[m] = ((Double) AgentData[t][m][0]).intValue();
@@ -40,27 +43,58 @@ public class Agent {
 			// NOTE : We are ignoring Y co-ordinate changes from Matlab for now
 			// So Agents only move in Left to Right or Right to Left
 			// at what ever Y location they were initially
-			agentY[m] = ((Double) AgentData[0][m][1]).intValue();
+			agentY[m] = ((Double) AgentData[t][m][1]).intValue();
 
-			// Drawing a line for Agent[m] from location @t=0 to t=current
-			for (int i = 0; i < t; i++) {
+			//Introducing random here so we only draw path for 20% of the agents each time
+			if(rn.nextInt(100) < 20)
+			{
+				p.stroke(rn.nextInt(255),rn.nextInt(255),rn.nextInt(255));
+				//p.strokeWeight(2);
+				for (int i = 1; i < t; i++) {
 
-				p.line(((Double) AgentData[i][m][0]).intValue(),
-						((Double) AgentData[0][m][1]).intValue(),
-						((Double) AgentData[i][m][0]).intValue(),
-						((Double) AgentData[0][m][1]).intValue());
+					int x1 = ((Double) AgentData[i-1][m][0]).intValue(),
+						y1 = ((Double) AgentData[i-1][m][1]).intValue(),
+						x2 = ((Double) AgentData[i][m][0]).intValue(),
+						y2 = ((Double) AgentData[i][m][1]).intValue();
+					
+					
+					p.line(x1, y1, x2, y2);
+						
+				}		
+				p.stroke(0);
+				//p.strokeWeight(1);
 			}
-
 			
+			//Draw path for the suspicious agent
+			if(AgentData[t][m][9] == 1){
+				p.stroke(255,0,0);
+				p.strokeWeight(5);
+				
+				for (int i = 1; i < t; i++) {
+
+					int x1 = ((Double) AgentData[i-1][m][0]).intValue(),
+						y1 = ((Double) AgentData[i-1][m][1]).intValue(),
+						x2 = ((Double) AgentData[i][m][0]).intValue(),
+						y2 = ((Double) AgentData[i][m][1]).intValue();
+					
+					
+					p.line(x1, y1, x2, y2);
+						
+				}
+								
+				p.stroke(0);
+				p.strokeWeight(1);
+			}
+						
 			
 			if (agentX[m] < ((Double) AgentData[t - 1][m][0]).intValue()) {
-				if (AgentData[0][m][9] == 1) {
+				if (AgentData[t][m][9] == 1) {
 					p.image(imgSuspiciousAgentGoingLeft, agentX[m], agentY[m],10, 25);
 				} else {
 					p.image(imgAgentGoingLeft, agentX[m], agentY[m], 10, 25);
 				}
 			} else {
-				if (AgentData[0][m][9] == 1) {
+				if (AgentData[t][m][9] == 1) {
 					p.image(imgSuspiciousAgentGoingRight, agentX[m], agentY[m],10, 25);
 				} else {
 					p.image(imgAgentGoingRight, agentX[m], agentY[m], 10, 25);

@@ -31,6 +31,7 @@ public class WSNAnimation extends PApplet {
 	public void setup(){
 		
 		size(w, h);
+		
 		LoadAgents();
 		SetupInitialSensorLocations();
 		SetupStandingPeople();
@@ -57,10 +58,11 @@ public class WSNAnimation extends PApplet {
 	}
 	
 	public void draw(){
+		
 		//Background is set to white
 		background(255);
 		
-		delay(100);
+		delay(200);
 		
 		drawGrid();  
 		drawRandomSensors();  	
@@ -73,6 +75,14 @@ public class WSNAnimation extends PApplet {
 			noLoop();			
 		}
 		
+	}
+	
+	public void mousePressed(){
+		noLoop();
+	}
+	
+	public void mouseReleased(){
+		loop();
 	}
 	
 	/*
