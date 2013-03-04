@@ -44,18 +44,10 @@ public class ImportAgentsDataFromExcel {
 		    reader.nextRow();
 		    rowindex++;
 		    
-		    for(int k = 1; k <= noOfAgentProperties-1; k++){
+		    for(int k = 1; k <= noOfAgentProperties; k++){
 		      
 		      AgentData[i][j][k-1] = Math.floor( reader.getFloat(reader.getRowNum(), k) * 100000 ) / 100000.0000;
 		            
-		    }
-		          
-		    //Suspicious
-		    if(reader.getString(reader.getRowNum(), noOfAgentProperties).toLowerCase().contains("y")){     
-		      AgentData[i][j][noOfAgentProperties-1] = 0; //TODO: Fix this later
-		    }
-		    else{
-		      AgentData[i][j][noOfAgentProperties-1] = 0;
 		    }
 		    
 		    j++;
@@ -65,14 +57,15 @@ public class ImportAgentsDataFromExcel {
 		    }    
 		  }
 		  
-		  return LoadMockXY(AgentData);
+		 //return AgentData;             //--Matlab Data
+		 return LoadXY(AgentData);       //--Processing X,Y smoothing
 	}
 	
 	/*
 	 * Current doing this Mock setup to show the moving agents and suspicious agents clearly
 	 * Will move this code to Matlab randomness later for more genuine values
 	 */
-	public double[][][] LoadMockXY(double[][][] agentData){
+	public double[][][] LoadXY(double[][][] agentData){
 		Random rn = new Random();
 		
 		for (int i = 1; i < noOfAgentSets; i++) {
@@ -86,35 +79,6 @@ public class ImportAgentsDataFromExcel {
 				agentData[i][j][0] = agentData[i-1][j][0] - rn.nextInt(10);
 				agentData[i][j][1] = agentData[i-1][j][1] - rn.nextInt(2);								
 			}	
-			
-			/*
-			 * Making agent 10, 20, 30, 40 suspicious between laps 0 and 50 
-			 * Making agent 10, 20, 30, 40 non suspicious between laps 50 and 100
-			 * Making agents 25, 35, 45, 55 suspicious between laps 50 and 100
-			 * Making agents 25, 35, 45, 55 non suspicious between laps 100 and noOfAgentSets
-			 * Making 50, 60, 70, 80 suspicious between laps 100 and noOfAgents
-			 * 
-			 * TODO : Make this random in future
-			 * */
-			
-			if(i >= 1 && i <= 50){
-				agentData[i][10][noOfAgentProperties-1] = 1;
-				agentData[i][20][noOfAgentProperties-1] = 1;
-				agentData[i][30][noOfAgentProperties-1] = 1;
-				agentData[i][40][noOfAgentProperties-1] = 1;
-				
-			}else if(i >= 50 && i <= 100){
-				agentData[i][25][noOfAgentProperties-1] = 1;
-				agentData[i][35][noOfAgentProperties-1] = 1;
-				agentData[i][45][noOfAgentProperties-1] = 1;
-				agentData[i][55][noOfAgentProperties-1] = 1;				
-				
-			}else if(i >= 100 && i <= noOfAgentSets){
-				agentData[i][50][noOfAgentProperties-1] = 1;
-				agentData[i][60][noOfAgentProperties-1] = 1;
-				agentData[i][70][noOfAgentProperties-1] = 1;
-				agentData[i][80][noOfAgentProperties-1] = 1;
-			}
 			
 		}
 		

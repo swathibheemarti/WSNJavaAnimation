@@ -11,8 +11,8 @@ public class WSNAnimation extends PApplet {
 	    gridSize = 40,               //Grid Size
 	    noOfSensors = 40,            //No of Sensors watching agents 
 	    t = 1,                       //Time variable
-	    noOfAgents = 200,            //No of agents -- this is coming from Matlab
-	    noOfAgentSets = 100,         //No of agent Sets (time laps)-- this is coming from Matlab
+	    noOfAgents = 50,            //No of agents -- this is coming from Matlab
+	    noOfAgentSets = 50,         //No of agent Sets (time laps)-- this is coming from Matlab
 	    noOfAgentProperties = 10,    //No of agent properties, X, Y, S, D, T, p(x,y), q(s,d), s(p(x,y)), 
 	                                 //s(q(s,d)), Suspiciousness
 	    noOfStandingAgents = 20;     //No of agents not moving
@@ -62,7 +62,7 @@ public class WSNAnimation extends PApplet {
 		//Background is set to white
 		background(255);
 		
-		delay(200);
+		delay(350);
 		
 		drawGrid();  
 		drawRandomSensors();  	

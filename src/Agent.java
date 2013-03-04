@@ -46,9 +46,9 @@ public class Agent {
 			agentY[m] = ((Double) AgentData[t][m][1]).intValue();
 
 			//Introducing random here so we only draw path for 20% of the agents each time
-			if(rn.nextInt(100) < 20)
+			if(rn.nextInt(100) < 5)
 			{
-				p.stroke(rn.nextInt(255),rn.nextInt(255),rn.nextInt(255));
+				p.stroke(0,0,0);
 				//p.strokeWeight(2);
 				for (int i = 1; i < t; i++) {
 
@@ -68,7 +68,7 @@ public class Agent {
 			//Draw path for the suspicious agent
 			if(AgentData[t][m][9] == 1){
 				p.stroke(255,0,0);
-				p.strokeWeight(5);
+				p.strokeWeight(2);
 				
 				for (int i = 1; i < t; i++) {
 
@@ -90,12 +90,14 @@ public class Agent {
 			if (agentX[m] < ((Double) AgentData[t - 1][m][0]).intValue()) {
 				if (AgentData[t][m][9] == 1) {
 					p.image(imgSuspiciousAgentGoingLeft, agentX[m], agentY[m],10, 25);
+					//p.delay(1000);
 				} else {
 					p.image(imgAgentGoingLeft, agentX[m], agentY[m], 10, 25);
 				}
 			} else {
 				if (AgentData[t][m][9] == 1) {
 					p.image(imgSuspiciousAgentGoingRight, agentX[m], agentY[m],10, 25);
+					//p.delay(1000);
 				} else {
 					p.image(imgAgentGoingRight, agentX[m], agentY[m], 10, 25);
 				}

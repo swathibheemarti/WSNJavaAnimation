@@ -15,7 +15,7 @@ public class Sensor {
 		sensorX = new int[_noOfSensors];
 		sensorY = new int[_noOfSensors];
 		noOfSensors = _noOfSensors;
-		imgSensor = p.loadImage("sensor.jpg"); 
+		imgSensor = p.loadImage("sensor.png"); 
 	}
 	
 	/*
