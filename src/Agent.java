@@ -46,7 +46,7 @@ public class Agent {
 			agentY[m] = ((Double) AgentData[t][m][1]).intValue();
 
 			//Introducing random here so we only draw path for 20% of the agents each time
-			if(rn.nextInt(100) < 5)
+			if(rn.nextInt(100) < 15)
 			{
 				p.stroke(0,0,0);
 				//p.strokeWeight(2);
@@ -67,6 +67,7 @@ public class Agent {
 			
 			//Draw path for the suspicious agent
 			if(AgentData[t][m][9] == 1){
+				
 				p.stroke(255,0,0);
 				p.strokeWeight(2);
 				

@@ -56,9 +56,8 @@ public class ImportAgentsDataFromExcel {
 		      i++;
 		    }    
 		  }
-		  
-		 //return AgentData;             //--Matlab Data
-		 return LoadXY(AgentData);       //--Processing X,Y smoothing
+		  		 
+		 return AgentData;      
 	}
 	
 	/*
