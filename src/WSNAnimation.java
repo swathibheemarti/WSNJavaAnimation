@@ -1,4 +1,7 @@
 import processing.core.*;
+import de.bezier.data.*;
+
+import java.util.*;
 
 public class WSNAnimation extends PApplet {
 
@@ -8,11 +11,11 @@ public class WSNAnimation extends PApplet {
 	Agent objAgent;
 	
 	int w = 600, h = 600,            //Screen Size  
-	    gridSize = 40,               //Grid Size
+	    gridSize = 30,               //Grid Size
 	    noOfSensors = 40,            //No of Sensors watching agents 
 	    t = 1,                       //Time variable
-	    noOfAgents = 50,             //No of agents -- this is coming from Matlab
-	    noOfAgentSets = 50,          //No of agent Sets (time laps)-- this is coming from Matlab
+	    noOfAgents = 100,            //No of agents -- this is coming from Matlab
+	    noOfAgentSets = 100,         //No of agent Sets (time laps)-- this is coming from Matlab
 	    noOfAgentProperties = 10,    //No of agent properties, X, Y, S, D, T, p(x,y), q(s,d), s(p(x,y)), 
 	                                 //s(q(s,d)), Suspiciousness
 	    noOfStandingAgents = 20;     //No of agents not moving
@@ -24,6 +27,8 @@ public class WSNAnimation extends PApplet {
 	
 	public void setup(){
 		
+		Initialize();
+		
 		size(w, h);
 		
 		LoadAgents();
@@ -31,6 +36,22 @@ public class WSNAnimation extends PApplet {
 		SetupStandingPeople();
 		
 		objAgent = new Agent(this, noOfAgents);
+	}
+	
+	public void Initialize(){
+		
+		XlsReader reader1 = new XlsReader(this, "AgentsData.xls");
+		
+		reader1.firstCell();
+		
+		//reader.nextRow();
+		
+		if(reader1.hasMoreRows()){
+			noOfAgents = (int) Math.round(reader1.getFloat(reader1.getRowNum(), 1));
+			gridSize = (int) Math.round(reader1.getFloat(reader1.getRowNum(), 3));
+			noOfAgentSets = (int) Math.round(reader1.getFloat(reader1.getRowNum(), 5));
+			w = h = (int) Math.round(reader1.getFloat(reader1.getRowNum(), 7));
+		}				
 	}
 	
 	public void LoadAgents(){

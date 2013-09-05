@@ -29,9 +29,14 @@ public class ImportAgentsDataFromExcel {
 	}
 	
 	public double[][][] LoadAgentData(){
-		  
-		  //Ignore Header Row
+		
+		  reader.firstCell();
+		
+		  //Ignore Simulation Details row		  
+		  reader.nextRow();
+  		  //Ignore Header Row
 		  reader.nextRow(); 
+		  
 		  
 		  int rowindex = 0;
 		  int i = 0, j = 0;
@@ -57,7 +62,7 @@ public class ImportAgentsDataFromExcel {
 		    }    
 		  }
 		  		 
-		 return AgentData;      
+		  return AgentData;      
 	}
 	
 	/*
