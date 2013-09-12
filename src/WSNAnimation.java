@@ -14,15 +14,15 @@ public class WSNAnimation extends PApplet {
 	boolean onPause = false, onPlay = false;	
 	boolean paused = false;
 	
-	int w = 0, h = 0,            //Screen Size  
+	int w = 0, h = 0,               //Screen Size  
 	    gridSize = 0,               //Grid Size
-	    noOfSensors = 40,            //No of Sensors watching agents 
-	    t = 1,                       //Time variable
-	    noOfAgents = 0,            //No of agents -- this is coming from Matlab
-	    noOfAgentSets = 0,         //No of agent Sets (time laps)-- this is coming from Matlab
-	    noOfAgentProperties = 10,    //No of agent properties, X, Y, S, D, T, p(x,y), s(p(x,y)), q(s,d),
-	                                 //s(q(s,d)), Suspiciousness
-	    noOfStandingAgents = 20;     //No of agents not moving
+	    noOfSensors = 40,           //No of Sensors watching agents 
+	    t = 1,                      //Time variable
+	    noOfAgents = 0,             //No of agents -- this is coming from Matlab
+	    noOfAgentSets = 0,          //No of agent Sets (time laps)-- this is coming from Matlab
+	    noOfAgentProperties = 10,   //No of agent properties, X, Y, S, D, T, p(x,y), s(p(x,y)), q(s,d),
+	                                //s(q(s,d)), Suspiciousness
+	    noOfStandingAgents = 20;    //No of agents not moving
 	   
 	PFont f;
 	
@@ -37,7 +37,7 @@ public class WSNAnimation extends PApplet {
 		imgPause = loadImage("PauseButton.png");
 		imgPlay = loadImage("PlayButton.png");
 		
-		size(w, h + 35);
+		size(w, h + 200);
 		
 		LoadAgents();
 		SetupInitialSensorLocations();
@@ -45,7 +45,7 @@ public class WSNAnimation extends PApplet {
 		
 		objAgent = new Agent(this, noOfAgents, w, h);
 		
-		f = createFont("Book Antiqua",10,true);
+		f = createFont("Book Antiqua",15,true);
 	}
 	
 	public void Initialize(){
@@ -87,7 +87,7 @@ public class WSNAnimation extends PApplet {
 		
 		//Background is set to white
 		background(255);
-		textFont(f,10);
+		textFont(f, 15);
 		
 		
 		delay(150);
@@ -158,6 +158,7 @@ public class WSNAnimation extends PApplet {
 	  Grid lines are drawn horizontally and vertically
 	*/
 	public void drawGrid(){
+		stroke(224,224,224);
 		//horizontal lines
 		for(int y = gridSize; y <= h; y += gridSize){
 			line(0, y, w, y);
@@ -166,7 +167,8 @@ public class WSNAnimation extends PApplet {
 		//vertical lines
 		for(int x = 0; x <= w; x+=gridSize){
 			line(x, 0, x, h);
-		} 
+		}
+		stroke(0);
 	}
 	
 	

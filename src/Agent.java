@@ -151,20 +151,29 @@ public class Agent {
 	}
 	
 	public void drawAgentDetails(double[][][] AgentData, int t, int x, int y){
+		int agentXLoc, agentYLoc;
+		
 		for (int m = 0; m < noOfAgents; m++) {
 			
-			agentX[m] = ((Double) AgentData[t][m][0]).intValue();
-			agentY[m] = ((Double) AgentData[t][m][1]).intValue();
+			agentXLoc = ((Double) AgentData[t][m][0]).intValue();
+			agentYLoc = ((Double) AgentData[t][m][1]).intValue();
 			
-			if(agentX[m] >= x - 20 && agentX[m] <= x + 20 && agentY[m] >= y - 20 && agentY[m] <= y + 20){
+			if(agentXLoc >= x - 30 && agentXLoc <= x + 30 && agentYLoc >= y - 30 && agentYLoc <= y + 30){
 				
-				agentDetails = "X : " + agentX[m] + 
-						       "Y : " + agentY[m] + 
-						       "S : " + ((Double) AgentData[t][m][2]).intValue() + 
-						       "D : " + ((Double) AgentData[t][m][3]).intValue();
+				agentDetails = "X : " + agentXLoc + 
+						       "   Y : " + agentYLoc + "\n" +
+						       "S : " + AgentData[t][m][2] +  
+						       "   D : " + AgentData[t][m][3] + "\n" +
+						       "P(x,y) : " + AgentData[t][m][5] + 
+						       "   S(x,y) : " + AgentData[t][m][6] + "\n" +
+						       "P(s,d) : " + AgentData[t][m][7] + 
+						       "   S(s,d) : " + AgentData[t][m][8] + "\n" +
+						       "IsSus? : " + (((Double) AgentData[t][m][9]).intValue() == 0 ? "No" : "Yes");
 			
-				p.fill(102,0,0);
-				p.text(agentDetails,agentX[m] + 10,agentY[m]);
+				p.fill(0,0,0);
+				p.text(agentDetails,(w/2 - 50),h + 60);
+				p.fill(255,0,0);
+				p.text("*", agentXLoc + 10, agentYLoc);
 				p.fill(0);
 				
 				break;
