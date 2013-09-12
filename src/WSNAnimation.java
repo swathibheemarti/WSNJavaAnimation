@@ -116,7 +116,11 @@ public class WSNAnimation extends PApplet {
 		}else if(onPlay && paused){
 			loop();
 			paused = false;
-		}				
+		}else if(!paused){
+			objAgent.drawAgentDetails(AgentData, t, mouseX, mouseY);
+			noLoop();
+			paused = true;
+		}
 	}
 	
 	/*
@@ -176,6 +180,6 @@ public class WSNAnimation extends PApplet {
 	
 	public void drawAgents(){
 		objAgent.drawAgents(AgentData, t);
-		objAgent.drawAgentsDetails(AgentData, t);
+		//objAgent.drawAgentsDetails(AgentData, t);
 	}	
 }

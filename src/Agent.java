@@ -148,5 +148,28 @@ public class Agent {
 			}
 		}		
 		
-	}	
+	}
+	
+	public void drawAgentDetails(double[][][] AgentData, int t, int x, int y){
+		for (int m = 0; m < noOfAgents; m++) {
+			
+			agentX[m] = ((Double) AgentData[t][m][0]).intValue();
+			agentY[m] = ((Double) AgentData[t][m][1]).intValue();
+			
+			if(agentX[m] >= x - 20 && agentX[m] <= x + 20 && agentY[m] >= y - 20 && agentY[m] <= y + 20){
+				
+				agentDetails = "X : " + agentX[m] + 
+						       "Y : " + agentY[m] + 
+						       "S : " + ((Double) AgentData[t][m][2]).intValue() + 
+						       "D : " + ((Double) AgentData[t][m][3]).intValue();
+			
+				p.fill(102,0,0);
+				p.text(agentDetails,agentX[m] + 10,agentY[m]);
+				p.fill(0);
+				
+				break;
+			}			
+		}
+	}
+	
 }
