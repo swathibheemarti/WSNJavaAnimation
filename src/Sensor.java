@@ -21,8 +21,8 @@ public class Sensor {
 	/*
 	  xGrid and yGrid are generated randomly, 
 	  xGrid, yGrid represent random cell (grid) for placement of sensor
-	  x & y co-ordinate is calculated based onthe grid locatin as 
-	  x = gridnumber * size of grid + (som value to place the sensor middle of the grid)
+	  x & y coordinate is calculated based on the grid location as 
+	  x = gridnumber * size of grid + (some value to place the sensor middle of the grid)
 	*/
 
 	public void setupSensorLocations(int w, int h, int gridSize){

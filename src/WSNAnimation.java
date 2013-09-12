@@ -1,6 +1,7 @@
 import processing.core.*;
 import de.bezier.data.*;
-
+import processing.core.PApplet;
+import processing.core.PImage;
 import java.util.*;
 
 public class WSNAnimation extends PApplet {
@@ -9,40 +10,49 @@ public class WSNAnimation extends PApplet {
 	Sensor objSensor;
 	StandingPerson objStandingPerson;
 	Agent objAgent;
+	PImage imgPause, imgPlay;
+	boolean onPause = false, onPlay = false;	
+	boolean paused = false;
 	
-	int w = 600, h = 600,            //Screen Size  
-	    gridSize = 30,               //Grid Size
+	int w = 0, h = 0,            //Screen Size  
+	    gridSize = 0,               //Grid Size
 	    noOfSensors = 40,            //No of Sensors watching agents 
 	    t = 1,                       //Time variable
-	    noOfAgents = 100,            //No of agents -- this is coming from Matlab
-	    noOfAgentSets = 100,         //No of agent Sets (time laps)-- this is coming from Matlab
-	    noOfAgentProperties = 10,    //No of agent properties, X, Y, S, D, T, p(x,y), q(s,d), s(p(x,y)), 
+	    noOfAgents = 0,            //No of agents -- this is coming from Matlab
+	    noOfAgentSets = 0,         //No of agent Sets (time laps)-- this is coming from Matlab
+	    noOfAgentProperties = 10,    //No of agent properties, X, Y, S, D, T, p(x,y), s(p(x,y)), q(s,d),
 	                                 //s(q(s,d)), Suspiciousness
 	    noOfStandingAgents = 20;     //No of agents not moving
-	    
+	   
+	PFont f;
 	
 	//10 sets of 200 Agents data, data points are 
 	//X, Y, S, D, T, p(x,y), q(s,d), s(p(x,y)), s(q(s,d)), Suspiciousness (0 or 1)
 	double AgentData[][][] = new double[noOfAgentSets][noOfAgents][noOfAgentProperties]; 
 	
 	public void setup(){
-		
+				
 		Initialize();
 		
-		size(w, h);
+		imgPause = loadImage("PauseButton.png");
+		imgPlay = loadImage("PlayButton.png");
+		
+		size(w, h + 35);
 		
 		LoadAgents();
 		SetupInitialSensorLocations();
 		SetupStandingPeople();
 		
-		objAgent = new Agent(this, noOfAgents);
+		objAgent = new Agent(this, noOfAgents, w, h);
+		
+		f = createFont("Book Antiqua",10,true);
 	}
 	
 	public void Initialize(){
 		
 		XlsReader reader1 = new XlsReader(this, "AgentsData.xls");
 		
-		reader1.firstCell();
+		reader1.firstRow();
 		
 		//reader.nextRow();
 		
@@ -73,15 +83,21 @@ public class WSNAnimation extends PApplet {
 	
 	public void draw(){
 		
+		update(mouseX, mouseY);
+		
 		//Background is set to white
 		background(255);
+		textFont(f,10);
+		
 		
 		delay(150);
 		
+		drawPause();
+		drawPlay();
 		drawGrid();  
 		drawRandomSensors();  	
 		drawRandomStandingPeople();
-		drawAgents();
+		drawAgents();		
 		
 		t++;
 		
@@ -92,11 +108,46 @@ public class WSNAnimation extends PApplet {
 	}
 	
 	public void mousePressed(){
-		noLoop();
+		update(mouseX, mouseY);
+		
+		if(onPause && !paused){
+			noLoop();
+			paused = true;
+		}else if(onPlay && paused){
+			loop();
+			paused = false;
+		}				
 	}
 	
+	/*
 	public void mouseReleased(){
 		loop();
+	}*/
+	
+	public void drawPause(){		
+		fill(255);
+		rect((w/2 - 25), h + 5, 25, 25);		
+		image(imgPause, (w/2 - 25), h + 5, 25, 25);
+	}
+	
+	public void drawPlay(){		
+		fill(255);
+		rect((w/2 + 25), h + 5, 25, 25);		
+		image(imgPlay, (w/2 + 25), h + 5, 25, 25);
+	}
+	
+	void update(int x, int y) {			
+		onPause = overRect((w/2 - 25), h + 5, 25, 25);	
+		onPlay = overRect((w/2 + 25), h + 5, 25, 25);
+	}
+	
+	boolean overRect(int x, int y, int width, int height)  {
+	  if (mouseX >= x && mouseX <= x+width && 
+	      mouseY >= y && mouseY <= y+height) {
+	    return true;
+	  } else {
+	    return false;
+	  }
 	}
 	
 	/*
@@ -125,5 +176,6 @@ public class WSNAnimation extends PApplet {
 	
 	public void drawAgents(){
 		objAgent.drawAgents(AgentData, t);
+		objAgent.drawAgentsDetails(AgentData, t);
 	}	
 }

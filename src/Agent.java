@@ -8,14 +8,20 @@ public class Agent {
 	int noOfAgents;
 	int[] agentX;
 	int[] agentY;
+	int w, h;
 	PImage imgAgentGoingRight, imgAgentGoingLeft, 
 	       imgSuspiciousAgentGoingLeft, imgSuspiciousAgentGoingRight;
 	
-	public Agent(PApplet _p, int _noOfAgents){
+	String agentDetails = "";
+	
+	public Agent(PApplet _p, int _noOfAgents, int _w, int _h){
 		p = _p;
 		noOfAgents = _noOfAgents;
 		agentX = new int[noOfAgents];
 		agentY = new int[noOfAgents];
+		w = _w;
+		h = _h;
+		
 		imgAgentGoingRight = p.loadImage("man_walking_right.png");
 		imgAgentGoingLeft = p.loadImage("man_walking_left.png");	
 		imgSuspiciousAgentGoingLeft = p.loadImage("man_walking_left_red.png");
@@ -42,8 +48,12 @@ public class Agent {
 			// AgentData[0:first set of agent data][m:agent no][1:Y location]
 			// NOTE : We are ignoring Y co-ordinate changes from Matlab for now
 			// So Agents only move in Left to Right or Right to Left
-			// at what ever Y location they were initially
+			// at whatever Y location they were initially
 			agentY[m] = ((Double) AgentData[t][m][1]).intValue();
+			
+			if(agentX[m] < 0 || agentX[m] > w || agentY[m] < 0 || agentY[m] + 25 > h){
+				continue;
+			}
 
 			//Introducing random here so we only draw path for 20% of the agents each time
 			if(rn.nextInt(100) < 15)
@@ -105,4 +115,38 @@ public class Agent {
 			}
 		}
 	}
+	
+	public void drawAgentsDetails(double[][][] AgentData, int t) {
+		
+		Random rn = new Random();
+		
+		for (int m = 0; m < noOfAgents; m++) {
+			// AgentData[0:first set of agent data][m:agent no][0:X location]
+			agentX[m] = ((Double) AgentData[t][m][0]).intValue();
+
+			// AgentData[0:first set of agent data][m:agent no][1:Y location]
+			// NOTE : We are ignoring Y co-ordinate changes from Matlab for now
+			// So Agents only move in Left to Right or Right to Left
+			// at what ever Y location they were initially
+			agentY[m] = ((Double) AgentData[t][m][1]).intValue();
+			
+			if(agentX[m] < 0 || agentX[m] > w || agentY[m] < 0 || agentY[m] + 25 > h){
+				continue;
+			}
+
+			//Introducing random here so we only draw path for 10% of the agents each time
+			if(rn.nextInt(100) < 10)
+			{
+				agentDetails = "X : " + agentX[m] + 
+						       "Y : " + agentY[m] + 
+						       "S : " + ((Double) AgentData[t][m][2]).intValue() + 
+						       "D : " + ((Double) AgentData[t][m][3]).intValue();
+				
+				p.fill(102,0,0);
+				p.text(agentDetails,agentX[m] + 10,agentY[m]);
+				p.fill(0);
+			}
+		}		
+		
+	}	
 }

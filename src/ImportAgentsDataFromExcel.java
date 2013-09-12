@@ -30,7 +30,7 @@ public class ImportAgentsDataFromExcel {
 	
 	public double[][][] LoadAgentData(){
 		
-		  reader.firstCell();
+		  reader.firstRow();
 		
 		  //Ignore Simulation Details row		  
 		  reader.nextRow();
